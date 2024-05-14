@@ -1,0 +1,46 @@
+
+<div class="weather-card" *ngIf="data">
+  <div class="row justify-content-end">
+    <div class="col-auto">
+      <div class="sunny-icon">
+        <i class="bi bi-sun-fill"></i>
+      </div>
+    </div>
+  </div>
+  <h1 class="weather-title text-center mb-4">
+  Weather App</h1>
+  <div class="input-group mb-3">
+    <input type="text" class="form-control"
+      placeholder="Enter Your City Name"
+      aria-label="City Name"
+      aria-describedby="basic-addon2" [(ngModel)]="city">
+    <button class="btn btn-primary weather-btn" (click)="fetchData()"
+        type="button" id="button-addon2">Get Weather</button>
+  </div>
+  <div id="weatherInfo">
+    <div class="weather-icon text-center">
+      <i class="bi bi-cloud" *ngIf="data.current_observation.condition.temperature >= 30"></i>
+      <i class="bi bi-cloud-sun" *ngIf="data.current_observation.condition.temperature < 30 && data.current_observation.condition.temperature > 10"></i>
+      <i class="bi bi-snow2" *ngIf="data.current_observation.condition.temperature < 10"></i>
+      <h1 class="weather-title text-center mb-4">{{ data.location.city }}</h1>
+    </div>
+    <div class="weather-info text-center">
+      <p>Temperature: {{ data.current_observation.condition.temperature }}°C</p>
+      <p>Weather: {{ data.current_observation.condition.text }}</p>
+      <p>Humidity: {{ data.current_observation.atmosphere.humidity }}%</p>
+      <p>Wind Speed: {{ data.current_observation.wind.speed }} </p>
+      
+    </div>
+    <div *ngFor="let forecast of forecasts">
+    <h3>{{ forecast.day }}</h3>
+    <p>Date: {{ forecast.date | date:'shortDate' }}</p>
+    <p>High: {{ forecast.high }}°C, Low: {{ forecast.low }}°C</p>
+    <p>Condition: {{ forecast.text }}</p>
+    </div>
+  </div>
+</div>
+
+<!-- Include Bootstrap JS -->
+<script src=
+"https://cdn.jsdelivr.net/npm/bootstrap@5.3.0-alpha1/dist/js/bootstrap.bundle.min.js"></script>
+<router-outlet></router-outlet>
